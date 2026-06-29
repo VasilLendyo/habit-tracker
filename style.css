@@ -48,6 +48,16 @@ body{
     border: 1px solid #ccc;
 }
 
+.habit-text{
+    cursor: pointer;
+    flex-grow: 1;
+}
+
+.habit-text.completed{
+    text-decoration: line-through;
+    color: #888;
+}
+
 .delete-btn{
     background: none;
     border: none;

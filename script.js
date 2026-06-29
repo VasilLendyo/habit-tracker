@@ -12,7 +12,18 @@ function renderHabits(){
         li.className = 'habit-item';
         
         const textSpan = document.createElement('span');
-        textSpan.textContent = habit;
+        textSpan.textContent = habit.text;
+        textSpan.className = 'habit-text';
+
+        if(habit.done) {
+            textSpan.classList.add('completed');
+        }
+
+        textSpan.addEventListener('click', () => {
+            habit.done = !habit.done;
+            renderHabits();
+        });
+
         li.appendChild(textSpan);
 
         const deleteBtn = document.createElement('button');
@@ -37,7 +48,8 @@ addBtn.addEventListener('click', () => {
         return;
     }
 
-    habits.push(text);
+    habits.push({text: text, done: false});
+
     habitInput.value = '';
     renderHabits();
 })
