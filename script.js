@@ -3,6 +3,7 @@ const habitInput = document.getElementById('habit-input');
 const addBtn = document.getElementById('add-btn');
 const habitList = document.getElementById('habit-list');
 const progressText = document.getElementById('progress-text');
+const clearAllBtn = document.getElementById('clear-all-btn');
 
 // Завантажуємо звички зі сховища або створюємо порожній масив, якщо там ще нічого немає
 let habits = JSON.parse(localStorage.getItem('my_habits')) || [];
@@ -111,3 +112,14 @@ addBtn.addEventListener('click', () => {
 
 // щоб відмалювати ті звички, які дістали з LocalStorage
 renderHabits();
+
+// Навішуємо подію кліку на кнопку "Очисти все"
+clearAllBtn.addEventListener('click', () => {
+    // Питаємо згоду користувача, щоб він не видалив все випадково
+    const confirmDelete = confirm('Ви впевнені, що хочете видалити ВСІ звички?');
+
+    if(confirmDelete) {
+        habits = []; // Повністю спуштошуємо наш масив звичок
+        renderHabits(); // Перемальовуємо візуал (він автоматично збереже порожній масив у LocalStorage)
+    }
+})
