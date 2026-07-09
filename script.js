@@ -2,6 +2,7 @@
 const habitInput = document.getElementById('habit-input');
 const addBtn = document.getElementById('add-btn');
 const habitList = document.getElementById('habit-list');
+const progressText = document.getElementById('progress-text');
 
 // Завантажуємо звички зі сховища або створюємо порожній масив, якщо там ще нічого немає
 let habits = JSON.parse(localStorage.getItem('my_habits')) || [];
@@ -15,6 +16,17 @@ function saveHabits() {
 function renderHabits(){
     //Очищення після кожної звички
     habitList.innerHTML = '';
+
+    // --- НОВИЙ БЛОК: РАХУЄМО ПРОГРЕС ---
+    const totalHabits = habits.length; // загальна кількість звичок у масиві
+    // Фільтруємо масив, залишаючи тільки воконані звички, і рахуємо їх кількість
+    const completeHabits = habits.filter(habit => habit.done).length;
+
+    // Рахуємо відсоток. Якщо звичок немає (0), то відсоток теж 0, щоб не було помилки ділення на 0
+    const pecentage = totalHabits > 0 ? Math.round((completeHabits / totalHabits) * 100) : 0;
+
+    // Оновлюємо текст лічильника на сторінці
+    progressText.textContent = `Виконано: ${completeHabits} з ${totalHabits} (${pecentage}%)`;
 
     //Перебирання нашого масиву
     habits.forEach((habit, index) => {
