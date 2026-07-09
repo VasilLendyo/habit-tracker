@@ -52,8 +52,10 @@ function renderHabits(){
         
         // Створення HTML-елементу span для тексту звички
         const textSpan = document.createElement('span');
-            //внесення тексту з масиву в цей span і присвоєння класу для стилізації
-            textSpan.textContent = habit.text;
+            // Внесення тексту та дати з масиву в цей span
+            // Якщо у старих звичок немає дати (бо вони були створені раніше), виведеться просто текс
+            const habitDate = habit.date ? ` (${habit.date})` : '';
+            textSpan.textContent = `${habit.text}${habitDate}`;
             textSpan.className = 'habit-text';
 
         //Перевірка стану об'єкта (виконано чи ні) і додавання класу для перекреслення тексту
@@ -102,8 +104,17 @@ addBtn.addEventListener('click', () => {
         return; // Зупиняємо виконання функції, щоб порожня звичка не додалася
     }
 
-    // Створюємо об'єкт нової звички та додаємо його в кінець нашого масиву
-    habits.push({text: text, done: false});
+    const now = new Date();
+    const day = now.getDate() < 10 ? `0${now.getDate()}` : now.getDate();
+    const month = (now.getMonth() + 1) < 10 ? `0${now.getMonth() + 1}` : now.getMonth() + 1;
+    const dateString = `${day}.${month}`; // Отримаємо рядок типу "09.07"
+
+    // Додаємо в масив об'єкт, який тепер має ще й властивості date
+    habits.push({
+        text: text,
+        done: false,
+        date: dateString // Зберігаємо дату створення
+    });
 
     // Очищаємо поле
     habitInput.value = '';
