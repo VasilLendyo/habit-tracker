@@ -14,19 +14,33 @@ function saveHabits() {
 
 //відмальвка в браузері
 function renderHabits(){
-    //Очищення після кожної звички
+    // Очищення списку перед кожним новим малюванням
     habitList.innerHTML = '';
 
-    // --- НОВИЙ БЛОК: РАХУЄМО ПРОГРЕС ---
-    const totalHabits = habits.length; // загальна кількість звичок у масиві
-    // Фільтруємо масив, залишаючи тільки воконані звички, і рахуємо їх кількість
-    const completeHabits = habits.filter(habit => habit.done).length;
+    // --- РАХУЄМО ПРОГРЕС ТА ДИНАМІЧНО ЗМІНЮЄМО КОЛІР ---
+    const totalHabits = habits.length;  // Загальна кількість звичок у масиві
+    const completeHabits = habits.filter(habit => habit.done).length; // Кількість виконаних
 
-    // Рахуємо відсоток. Якщо звичок немає (0), то відсоток теж 0, щоб не було помилки ділення на 0
+    // Розрахунок відсотка з округленням до цілого числа
     const pecentage = totalHabits > 0 ? Math.round((completeHabits / totalHabits) * 100) : 0;
 
-    // Оновлюємо текст лічильника на сторінці
+    // Виводимо оновлений текст у HTML
     progressText.textContent = `Виконано: ${completeHabits} з ${totalHabits} (${pecentage}%)`;
+
+    // Скидаємо всі поперідні класи кольору, щоб вони не накладались
+    progressText.className = '';
+
+    // Перевіряємо відсоток і додаємо відповідинй клас для стилізації
+    if (totalHabits === 0 || pecentage === 0) {
+        // Якщо список порожній або виконано 0% — фарбуємо в червоний
+        progressText.classList.add('progress-low');
+    } else if (pecentage === 100) {
+        // Якщо виконано абсолютно всі звички (100%) — фарбуємо в зелений
+        progressText.classList.add('progress-full');
+    } else {
+        // Усі проміжні варіанти від 1% до 99% — фарбуємо в жовтий/помаранчевий
+        progressText.classList.add('progress-medium');
+    }
 
     //Перебирання нашого масиву
     habits.forEach((habit, index) => {

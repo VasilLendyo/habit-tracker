@@ -64,3 +64,21 @@ body{
     cursor: pointer;
     font-size: 14px;
 }
+
+/* Червоний колір, якщо прогрес нульовий */
+.progress-low{
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Жовтий/помаранчевий колір, якщо процес пішов, але ще не фінал */
+.progress-medium {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+/* Зелений колір, коли виконано абсолютно всі звички*/
+.progress-full {
+    color: #28a745;
+    font-weight: bold;
+}
