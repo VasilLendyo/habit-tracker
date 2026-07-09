@@ -3,8 +3,13 @@ const habitInput = document.getElementById('habit-input');
 const addBtn = document.getElementById('add-btn');
 const habitList = document.getElementById('habit-list');
 
-//Створення масиву
-let habits = [];
+// Завантажуємо звички зі сховища або створюємо порожній масив, якщо там ще нічого немає
+let habits = JSON.parse(localStorage.getItem('my_habits')) || [];
+
+// Функція для збереження масиву звичок у локальне сховище браузера
+function saveHabits() {
+        localStorage.setItem('my_habits', JSON.stringify(habits));
+}
 
 //відмальвка в браузері
 function renderHabits(){
@@ -55,6 +60,8 @@ function renderHabits(){
         // Вкладаємо елементи списку у сам список
         habitList.appendChild(li);
     });
+
+    saveHabits();
 }
 
 // Навішуємо подію кліку на кнопку "Додати"
@@ -75,3 +82,6 @@ addBtn.addEventListener('click', () => {
     habitInput.value = '';
     renderHabits(); //перемальвуємо візуал в браузері з новою звичкою
 })
+
+// щоб відмалювати ті звички, які дістали з LocalStorage
+renderHabits();
