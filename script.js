@@ -104,8 +104,11 @@ addBtn.addEventListener('click', () => {
         return; // Зупиняємо виконання функції, щоб порожня звичка не додалася
     }
 
+    // Отримуємо поточну дату та час
     const now = new Date();
+    // Якщо число менше 10, додаємо 0 попереду (наприклад, "09" замість "9")
     const day = now.getDate() < 10 ? `0${now.getDate()}` : now.getDate();
+    // Місяці в JS рахуються з 0, тому додаємо 1. Також додаємо 0 попереду, якщо потрібно
     const month = (now.getMonth() + 1) < 10 ? `0${now.getMonth() + 1}` : now.getMonth() + 1;
     const dateString = `${day}.${month}`; // Отримаємо рядок типу "09.07"
 
